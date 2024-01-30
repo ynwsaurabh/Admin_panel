@@ -1,0 +1,294 @@
+#file-dropper {
+  margin: 0% auto;
+  align-items: center;
+  background-color: var(--component-shade);
+  border: 2px dotted var(--component-highlight);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  justify-items: center;
+  min-height: 360px;
+  min-width: 300px;
+  padding: 30px 10px 40px;
+  row-gap: 20px;
+  width: 80%;
+}
+
+#file-dropper #splash-drop-icon {
+  cursor: pointer;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  opacity: .75;
+  transition: all .15s linear;
+}
+
+#file-dropper .button {
+  max-width: 280px;
+  width: 90%;
+}
+
+.button {
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 0 15px transparent;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row;
+  font-size: 13px;
+  font-weight: 700;
+  height: 30px;
+  justify-content: center;
+  min-height: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  text-decoration: none;
+  transition: all .15s linear;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.button.positive:hover {
+  box-shadow: 0 0 15px var(--accent-shadow-color);
+}
+
+.button,
+.buttons {
+  align-items: center;
+  gap: 10px;
+}
+
+.button:active {
+  transform: translateY(3px);
+}
+
+.button.positive {
+  background: linear-gradient(200deg, var(--accent-light-color), var(--accent-color));
+  background-position: 50% 50%;
+  background-size: 100%;
+}
+
+.button.rounded {
+  border-radius: 90px;
+}
+
+.button.large {
+  font-size: 14px;
+  height: 46px;
+  min-height: 40px;
+  text-transform: none;
+}
+
+.box img {
+  width: 100%;
+  max-height: 200px;
+}
+
+.button.negative {
+  background-color: #000;
+  border: 2px solid var(--component-highlight);
+  color: var(--text-dim);
+}
+
+.button.negative:hover {
+  background: #fff;
+  border: 2px solid hsla(0, 0%, 100%, .05);
+  box-shadow: 0 0 10px var(--component-highlight);
+  color: var(--text-opaque);
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.top-20 {
+  margin-top: 20px !important;
+}
+
+.button.med {
+  height: 40px;
+  min-height: 40px;
+}
+.resultWrapper{
+  min-height: 80vh;
+}
+
+.container {
+  /* max-width: 900px; */
+  padding-inline-start: 0px;
+  width: 80%;
+  margin: auto;
+}
+
+.todos {
+  margin-top: 1rem;
+}
+
+.todo {
+  background-color: var(--primary);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  height: 42px;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.3rem;
+}
+a{
+  text-decoration: none;
+}
+.toggle-primary  {
+  width: calc(100% - 60px);
+  display: flex;
+  /* border: 2px solid green; */
+  gap: 1rem;
+}
+.toggle-primary a  {
+  width: calc(100% - 60px);
+  display: flex;
+  /* border: 2px solid green; */
+  gap: 1rem;
+}
+
+.toggle-delete {
+  display: flex;
+  /* border: 2px solid green; */
+  gap: 1rem;
+}
+
+.delete-todo-button {
+  padding: 0 1rem;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.todo-title {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--primary-super-light);
+}
+
+:root {
+  /* 168  */
+  --hue: 200;
+  --primary: hsl(var(--hue), 76%, 36%);
+  --primary-light: hsl(var(--hue), 76%, 56%);
+  --primary-super-light: hsl(var(--hue), 36%, 95%);
+}
+
+#input {
+  width: 60%;
+}
+
+/* Delete Button */
+.btnDelete {
+  background-color: transparent;
+  position: relative;
+  cursor: pointer;
+  border: none;
+}
+
+.btnDelete::after {
+  content: 'delete';
+  position: absolute;
+  top: -130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: fit-content;
+  background-color: rgb(168, 7, 7);
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: .2s linear;
+  transition-delay: .2s;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.icon {
+  transform: scale(1.2);
+  transition: .2s linear;
+}
+
+.btnDelete:hover>.icon {
+  transform: scale(1.5);
+}
+
+.btnDelete:hover>.icon path {
+  fill: rgb(168, 7, 7);
+}
+
+.btnDelete:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -160%;
+}
+
+/* Edit Button */
+.btnEdit {
+  background-color: transparent;
+  position: relative;
+  cursor: pointer;
+  border: none;
+}
+
+.btnEdit::after {
+  content: 'edit';
+  position: absolute;
+  top: -130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: fit-content;
+  background-color: rgb(7, 163, 168);
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: .2s linear;
+  transition-delay: .2s;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.icon {
+  transform: scale(1.2);
+  transition: .2s linear;
+}
+
+.btnEdit:hover>.icon {
+  transform: scale(1.5);
+}
+
+.btnEdit:hover>.icon path {
+  fill: rgb(7, 163, 168);
+}
+
+.btnEdit:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -160%;
+}
+
+@media (max-width: 550px) {
+  .todo-title {
+    font-size: 1rem;
+  }
+}

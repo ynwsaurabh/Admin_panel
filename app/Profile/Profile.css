@@ -1,0 +1,201 @@
+/* Profile */
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 7%;
+    margin-top: 50px;
+    min-height: 90vh;
+  }
+  
+  .profile .userProfilePicture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 100%;
+    scale: 2.5;
+    background-color: #fff;
+  }
+  
+  .profileInfoPrimary {
+    position: relative;
+    width: max(40%, 350px);
+    padding: 20px 30px 50px;
+    background-color: #ff8400;
+    border-radius: 50px;
+    color: #f6f1e9;
+    min-height: fit-content;
+  }
+  .profileInfoPrimary h1 {
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0.2px;
+    font-weight: 500;
+  }
+  .profileInfoPrimary a {
+    all: unset;
+  }
+  .profileInfoEdit {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: fit-content;
+    right: 7.5%;
+    bottom: 0px;
+    cursor: pointer;
+  }
+  .website,.location{
+    cursor: pointer;
+  }
+
+  
+  @media (max-width: 1060px) {
+    .userProfilePicture {
+      scale: 1;
+    }
+    
+    .editProfilePrimary {
+      margin: 0;
+      margin-right: 30px;
+    }
+    .editProfileSecondary {
+      margin: 0 10px;
+    }
+  
+    .editProfileContainer .editBtn {
+      left: 12px;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .profile {
+      margin: 75px 0;
+      flex-direction: column;
+    }
+    .profile .userProfilePicture {
+      margin: 100px 0;
+      scale: 2;
+    }
+    .profileInfoPrimary {
+      border-radius: 40px;
+    }
+    .editProfileContainer {
+      margin: 15px auto;
+      padding: 30px 30px 50px;
+    }
+    .editProfileHeader {
+      position: relative;
+      left: 95%;
+      top: -20px;
+      width: fit-content;
+    }
+  
+    .editProfileHeader .header {
+      display: none;
+    }
+    .editProfileForm {
+      flex-direction: column;
+      margin: 0;
+      margin-top: -30px;
+      justify-content: center;
+    }
+    .editProfilePrimary {
+      margin: 0;
+    }
+  
+    .editProfilePhoto {
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+    .editImageIcon {
+      left: 58%;
+    }
+  
+    .editProfileContainer .editBtn {
+      left: 0;
+      bottom: 0;
+      top: 18px;
+    }
+  
+    .editProfileSecondary {
+      margin: 0;
+      margin: 0 auto;
+    }
+  
+    label {
+      font-size: 12px;
+    }
+  
+    .editProfileSecondary label input,
+    .editProfileSecondary label select,
+    .editProfileSecondary label textarea {
+      font-size: 14px;
+    }
+    .css-8rh4cp-control {
+      min-height: 30px !important;
+      height: 30px !important;
+    }
+    .css-15yt83d-control {
+      height: 30px !important;
+      min-height: 30px !important;
+      width: 95.5% !important;
+    }
+    .css-1fdsijx-ValueContainer {
+      height: 20px !important;
+    }
+    .css-qbdosj-Input {
+      grid-area: inherit !important;
+    }
+  }
+  @media (max-width: 750px) {
+    .editImageIcon {
+      top: 45%;
+      left: 56%;
+      font-size: 20px;
+    }
+  }
+  @media (max-width: 650px) {
+    .profile {
+      margin: 50px 0;
+      min-height: 80vh;
+    }
+    .profile .userProfilePicture{
+      margin: 75px 0 15px;
+      scale: 1.8;
+    }
+  
+    .profileInfoPrimary {
+      min-height: 240px;
+    }
+    .profileInfoEdit {
+      bottom: 5px;
+    }
+    .profileInfoPrimary h1 {
+      font-size: 18px;
+      line-height: 22px;
+      font-weight: 400;
+    }
+    .profileInfoPrimary {
+      width: 280px;
+      padding: 10px 10px 30px 20px;
+      border-radius: 30px;
+      margin-top: 70px;
+    }
+  
+    .editProfileContainer {
+      margin: 45px auto;
+      min-width: 200px;
+    }
+    
+    .editImageIcon {
+      left: 58%;
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    #breed {
+      margin-left: 10px;
+    }
+  }

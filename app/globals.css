@@ -1,0 +1,25 @@
+body{
+    margin-top: 70px;
+    background-color: #f6f1e9;
+    margin-left: -1px;
+    margin-right: -2px;
+    margin-bottom: -2px;
+}
+html, body{
+    width: 100%;
+    overflow-x: hidden;
+  }
+  :root {
+    --text-opaque: black;
+    --text-dim: hsla(0,0%,100%,.6);
+    --text-color: hsla(0, 1%, 53%, 0.9);
+    --accent-color: #09c;
+    --component-border: hsla(0,0%,100%,.5);
+    --component-dim: hsla(0,0%,100%,.06);
+    --component-shade: rgba(0,0,0,.1);
+    --component-color: #383a3e;
+    --component-highlight: #424549;
+    --accent-color: #b8961e;
+    --accent-light-color: #cca929;
+    --accent-shadow-color: #b8961e99;
+}
