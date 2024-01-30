@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { IconContext } from "react-icons";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth,onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import './Login.css'
 import FirebaseConfig from '@/Component/Config';
 import { toast } from 'react-toastify';
@@ -17,6 +17,12 @@ const login = () => {
     const handleCLick = () => setIsRevealPwd(!isRevealPwd);
     // const handleForgot = () => setIsRevealPwd(!isRevealPwd);
     const db =FirebaseConfig();
+    const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          router.replace('/Profile')
+        }
+      });
     const handleSubmit = (e) => {
         e.preventDefault();
         const auth = getAuth();
