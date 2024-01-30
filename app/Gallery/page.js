@@ -138,7 +138,7 @@ const Gallery = () => {
     <div>
 
       <div id='label'>Technoholic</div>
-      {yuvaData.length === 0 ? (
+      {techData.length === 0 ? (
         <div id='noDataFound'> No Data Found</div>
       ) : (
         <div id='tilesContainer'>
