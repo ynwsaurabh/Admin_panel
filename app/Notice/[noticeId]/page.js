@@ -3,7 +3,7 @@ import '../Notice.css';
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { set, get, ref, remove } from "firebase/database";
+import { set, get, ref, remove, getDatabase } from "firebase/database";
 import FirebaseConfig from '@/Component/Config';
 import { ref as Sref, getDownloadURL, deleteObject, uploadBytes, getStorage } from 'firebase/storage';
 import '../../Faculty/AddFaculty/AddFaculty.css'
@@ -20,13 +20,14 @@ const page = ({ params }) => {
   });
   const id = params.noticeId;
 
-  const db = FirebaseConfig();
+  const app = FirebaseConfig();
+  const db = getDatabase(app);
   const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () =>{
 
-      const auth = getAuth();
+      const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')
@@ -112,7 +113,7 @@ const page = ({ params }) => {
     const { title, description, image } = formData;
     const childRef = ref(db, `Notice` + `/${id}`)
     if (inputImage.files[0]) {
-      const storage = getStorage();
+      const storage = getStorage(app);
       const storageRef = Sref(storage, '/NoticeImage' + `/${id}`)
       await uploadBytes(storageRef, image);
       const downloadURL = await getDownloadURL(storageRef);
@@ -150,7 +151,7 @@ const page = ({ params }) => {
 
   const handleDelete = async () => {
     const deleteNotice = ref(db, `/Notice/${id}`);
-    const storage = getStorage();
+    const storage = getStorage(app);
     const imageRef = Sref(storage, '/NoticeImage' + `/${id}`);
     const noticeSnapshot = await get(deleteNotice);
     const noticeData = noticeSnapshot.val();

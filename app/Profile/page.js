@@ -11,9 +11,9 @@ import { toast } from 'react-toastify';
 
 const Profile = () => {
   const router =useRouter();
-  const db =FirebaseConfig();
+  const app =FirebaseConfig();
 
-    const auth = getAuth();
+    const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')

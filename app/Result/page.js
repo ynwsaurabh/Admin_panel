@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './Result.css'
 import FloatingButton from '@/Component/FloatingBtn'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { remove, get, push, ref } from "firebase/database";
+import { remove, get,getDatabase, push, ref } from "firebase/database";
 import { ref as Sref, deleteObject, getStorage } from 'firebase/storage';
 import { useRouter } from 'next/navigation'
 import FirebaseConfig from '@/Component/Config';
@@ -11,7 +11,8 @@ import { toast } from 'react-toastify';
 
 const Result = () => {
   const [resultData, setResultData] = useState([]);
-  const db = FirebaseConfig();
+  const app = FirebaseConfig();
+  const db = getDatabase(app)
   const router = useRouter();
   const handleAddResult = () => {
     router.push('Result/AddResult')
@@ -19,7 +20,7 @@ const Result = () => {
   useEffect(() => {
     const fetchData = async () => {
 
-      const auth = getAuth();
+      const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')
@@ -44,7 +45,7 @@ const Result = () => {
   }, [resultData])
 
   const handleDelete = async (key, name) => {
-    const storage = getStorage();
+    const storage = getStorage(app);
     const resultDbRef = ref(db, `/pdf/${key}`);
     const resultStorageRef = Sref(storage, '/pdf' + `/${name}`);
     await deleteObject(resultStorageRef)

@@ -10,12 +10,14 @@ import { MdNewspaper } from "react-icons/md";
 import { GrGallery } from "react-icons/gr";
 import { LuNewspaper } from "react-icons/lu";
 import { AiOutlineLogout } from "react-icons/ai";
+import FirebaseConfig from './Config'
 const Navbar = () => {
     const [click, setClick] = useState(false);
     const handleCLick = () => setClick(!click);
     const router = useRouter();
+    const app = FirebaseConfig()
     const logout = () =>{
-        const auth = getAuth();
+        const auth = getAuth(app);
         signOut(auth)
       .then(() => {
         toast.success("User signed out successfully");

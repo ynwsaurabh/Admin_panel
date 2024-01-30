@@ -2,15 +2,15 @@
 import React, { useState } from 'react'
 import './AddFaculty.css'
 import { useRouter } from 'next/navigation'
-import { set, get, push, ref } from "firebase/database";
+import { set, getDatabase, push, ref } from "firebase/database";
 import FirebaseConfig from '@/Component/Config';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {ref as Sref, getDownloadURL, uploadBytes, getStorage} from 'firebase/storage';
 import { toast } from 'react-toastify';
 
 const AddFaculty = () => {
-  
-  const auth = getAuth();
+  const app = FirebaseConfig();
+  const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')
@@ -18,7 +18,7 @@ const AddFaculty = () => {
         }
       });
 
-  const db = FirebaseConfig();
+  const db = getDatabase(app);
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
@@ -61,7 +61,7 @@ const AddFaculty = () => {
     const inputImage = document.querySelector("#inputImage");
     const facultyRef = ref(db, `Faculty/${department}`)
     const key =push(facultyRef).key;
-    const storage = getStorage();
+    const storage = getStorage(app);
     const storageRef = Sref(storage, '/Faculty'+ `/${key}`)
     await uploadBytes(storageRef, image);
     const downloadURL = await getDownloadURL(storageRef);

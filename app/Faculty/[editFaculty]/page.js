@@ -2,7 +2,7 @@
 import FirebaseConfig from '@/Component/Config';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { set, get, remove, push, ref, update } from "firebase/database";
+import { set, get, remove, push, ref, update, getDatabase } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref as Sref, deleteObject, getDownloadURL, uploadBytes, getStorage } from 'firebase/storage';
 import '../AddFaculty/AddFaculty.css'
@@ -13,7 +13,8 @@ const EditFaculty = ({ params }) => {
     const searchParams = useSearchParams();
     const category = searchParams.get('category')
 
-    const db = FirebaseConfig();
+    const app = FirebaseConfig();
+    const db = getDatabase(app);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,7 +24,7 @@ const EditFaculty = ({ params }) => {
     });
 
     useEffect(() => {
-        const auth = getAuth();
+        const auth = getAuth(app);
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 toast.error('Login First')
@@ -82,7 +83,7 @@ const EditFaculty = ({ params }) => {
         const { name, email, post, department, image } = formData;
         const upfacultyRef = ref(db, `Faculty/${department}/${id}`)
         if (inputImage.files[0]) {
-            const storage = getStorage();
+            const storage = getStorage(app);
             const storageRef = Sref(storage, '/Faculty' + `/${id}`)
             await uploadBytes(storageRef, image);
             const downloadURL = await getDownloadURL(storageRef);
@@ -117,7 +118,7 @@ const EditFaculty = ({ params }) => {
 
     const handleDelete = async () => {
         const deleteFaculty = ref(db, `/Faculty/${category}/${id}`);
-        const storage = getStorage();
+        const storage = getStorage(app);
         const imageRef = Sref(storage, '/Faculty' + `/${id}`);
         const facultySnapshot = await get(deleteFaculty);
         const facultyData = facultySnapshot.val();

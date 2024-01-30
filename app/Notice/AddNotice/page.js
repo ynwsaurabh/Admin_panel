@@ -3,14 +3,15 @@ import React, { useState } from 'react'
 import '../../Faculty/AddFaculty/AddFaculty.css'
 import { useRouter } from 'next/navigation'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { set, get, push, ref } from "firebase/database";
+import { set, get, push, ref, getDatabase } from "firebase/database";
 import FirebaseConfig from '@/Component/Config';
 import { ref as Sref, getDownloadURL, uploadBytes, getStorage } from 'firebase/storage';
 import { toast } from 'react-toastify';
 
 
 const AddNotice = () => {
-  const db = FirebaseConfig();
+  const app = FirebaseConfig();
+  const db =getDatabase(app)
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
@@ -18,7 +19,7 @@ const AddNotice = () => {
     image: null,
   });
 
-  const auth = getAuth();
+  const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')
@@ -62,7 +63,7 @@ const AddNotice = () => {
     const key = push(noticeRef).key;
     const inputImage = document.querySelector("#inputImage");
     if (inputImage.files[0]) {
-      const storage = getStorage();
+      const storage = getStorage(app);
       const storageRef = Sref(storage, '/NoticeImage' + `/${key}`)
       await uploadBytes(storageRef, image);
       const downloadURL = await getDownloadURL(storageRef);

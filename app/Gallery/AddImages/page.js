@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 FirebaseConfig
 import './AddImages.css'
-import { set, get, push, ref } from "firebase/database";
+import { set, get, push, ref, getDatabase } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {ref as Sref, getDownloadURL, uploadBytes, getStorage} from 'firebase/storage';
 import { toast } from 'react-toastify';
@@ -13,9 +13,9 @@ const AddImages = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [dropDownValue, setDropDownValue] = useState('');
     const router = useRouter();
-    const db =FirebaseConfig();
-    
-    const auth = getAuth();
+    const app =FirebaseConfig();
+    const db = getDatabase(app);
+    const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')
@@ -52,7 +52,7 @@ const AddImages = () => {
         }
         else{
         const imageRef = ref(db, `/gallery/${dropDownValue}`);
-        const storage = getStorage();
+        const storage = getStorage(app);
         
         const uploadPromises = selectedFiles.map(async (fileData) => {
             const { name, file } = fileData;

@@ -2,7 +2,7 @@
 import './Faculty.css'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { set, get, ref } from "firebase/database";
+import { set, get, ref, getDatabase } from "firebase/database";
 import FirebaseConfig from '@/Component/Config';
 import FloatingButton from '@/Component/FloatingBtn';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -15,11 +15,12 @@ const Faculty = () => {
   const [BAdata, setBAdata] = useState([]);
   const [BCOMdata, setBCOMdata] = useState([]);
   const [BBIdata, setBBIdata] = useState([]);
-  const db = FirebaseConfig();
+  const app = FirebaseConfig();
+  const db = getDatabase(app);
   const router = useRouter();
   useEffect(() => {
 
-    const auth = getAuth();
+    const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')

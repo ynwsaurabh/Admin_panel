@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { set, get, ref, remove, update } from "firebase/database";
+import { set, get, ref, remove, update, getDatabase } from "firebase/database";
 import FirebaseConfig from '@/Component/Config';
 import { ref as Sref, getDownloadURL, deleteObject, uploadBytes, getStorage } from 'firebase/storage';
 import './editResult.css'
@@ -15,11 +15,12 @@ const editResult = ({ params }) => {
     const [selectedFiles, setSelectedFiles] = useState('');
     const [getData, setGetData] = useState('')
     const router = useRouter();
-    const db = FirebaseConfig();
+    const app = FirebaseConfig();
+    const db = getDatabase(app);
     const id = params.editResult;
 
     const handleDelete = async () => {
-        const storage = getStorage();
+        const storage = getStorage(app);
         const resultDbRef = ref(db, `/pdf/${id}`);
         const resultStorageRef = Sref(storage, '/pdf' + `/${getData.pdfTitle}`);
         await deleteObject(resultStorageRef)
@@ -34,7 +35,7 @@ const editResult = ({ params }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const auth = getAuth();
+            const auth = getAuth(app);
             onAuthStateChanged(auth, (user) => {
                 if (!user) {
                     toast.error('Login First');
@@ -78,7 +79,7 @@ const editResult = ({ params }) => {
         router.replace('/Result')
     }
     const handleUpload = async () => {
-        const storage = getStorage();
+        const storage = getStorage(app);
 
         const resultDbRef = ref(db, `/pdf/${id}`);
         const resultStorageRef = Sref(storage, '/pdf' + `/${getData.pdfTitle}`)

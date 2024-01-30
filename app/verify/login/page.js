@@ -16,8 +16,8 @@ const login = () => {
     const router = useRouter();
     const handleCLick = () => setIsRevealPwd(!isRevealPwd);
     // const handleForgot = () => setIsRevealPwd(!isRevealPwd);
-    const db =FirebaseConfig();
-    const auth = getAuth();
+    const app =FirebaseConfig();
+    const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (user) {
           router.replace('/Profile')
@@ -25,7 +25,7 @@ const login = () => {
       });
     const handleSubmit = (e) => {
         e.preventDefault();
-        const auth = getAuth();
+        const auth = getAuth(app);
         try {
             signInWithEmailAndPassword(auth, email, password).then(() => {
                 toast.success('Login Success')

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import './Gallery.css'
 import { useRouter } from 'next/navigation';
-import { set, get, ref } from "firebase/database";
+import { set, get, ref, getDatabase } from "firebase/database";
 import FirebaseConfig from '@/Component/Config';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import FloatingButton from '@/Component/FloatingBtn';
@@ -14,12 +14,13 @@ const Gallery = () => {
   const [independenceData, setIndependenceData] = useState([]);
   const [annualData, setAnnualData] = useState([]);
   const [artData, setArtData] = useState([]);
-  const db = FirebaseConfig();
+  const app = FirebaseConfig();
+  const db = getDatabase(app);
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
-      const auth = getAuth();
+      const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')

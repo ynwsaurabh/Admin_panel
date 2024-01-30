@@ -2,20 +2,21 @@
 import React, { useEffect, useState } from 'react'
 import './Notice.css'
 import { useRouter } from 'next/navigation'
-import { set, get, ref } from "firebase/database";
+import { set, get, getDatabase, ref } from "firebase/database";
 import FirebaseConfig from '@/Component/Config';
 import FloatingButton from '@/Component/FloatingBtn';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { toast } from 'react-toastify';
 const Notice = () => {
   const [data, setData] = useState([]);
-  const db = FirebaseConfig();
+  const app =FirebaseConfig();
+  const db = getDatabase(app);
   const router = useRouter();
 
   useEffect(() => {
 
     const fetchData =async() =>{
-      const auth = getAuth();
+      const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { set, get, push, ref } from "firebase/database";
+import { set, get, push, ref, getDatabase } from "firebase/database";
 import {ref as Sref, getDownloadURL, uploadBytes, getStorage} from 'firebase/storage';
 import '../Result.css'
 import FirebaseConfig from '@/Component/Config';
@@ -11,9 +11,10 @@ import { toast } from 'react-toastify';
 const page = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const router = useRouter();
-    const db =FirebaseConfig();
+    const app =FirebaseConfig();
+    const db = getDatabase(app);
 
-    const auth = getAuth();
+    const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')
@@ -43,7 +44,7 @@ const page = () => {
     }
     const handleUpload = async() =>{
         const resultRef = ref(db, `pdf/`);
-        const storage = getStorage();
+        const storage = getStorage(app);
         
         const uploadPromises = selectedFiles.map(async (fileData) => {
             const { name, file } = fileData;
