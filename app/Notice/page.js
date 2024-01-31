@@ -13,18 +13,16 @@ const Notice = () => {
   const db = getDatabase(app);
   const router = useRouter();
 
-  useEffect(() => {
-
-    const fetchData = async () => {
-      const auth = getAuth(app);
+  const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (!user) {
           toast.error('Login First')
           router.replace('/verify/login')
         }
       });
+  useEffect(() => {
       const noticeRef = ref(db, 'Notice/')
-      await get(noticeRef).then((snapshot) => {
+      get(noticeRef).then((snapshot) => {
         if (snapshot.exists()) {
           const noticeData = Object.entries(snapshot.val()).map(([key, notice]) => ({
             id: key,
@@ -38,9 +36,6 @@ const Notice = () => {
         .catch((error) => {
           console.error('Error fetching data:', error);
         });
-    }
-
-    return () => { fetchData(); };
 
   }, [])
 
