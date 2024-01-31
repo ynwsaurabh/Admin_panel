@@ -8,7 +8,6 @@ import { ref as Sref, getDownloadURL, deleteObject, uploadBytes, getStorage } fr
 import './editResult.css'
 import { toast } from 'react-toastify';
 import '../AddResult/AddResult.css'
-import '../Result.css'
 
 const editResult = ({ params }) => {
 
@@ -19,6 +18,26 @@ const editResult = ({ params }) => {
     const db = getDatabase(app);
     const id = params.editResult;
 
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            toast.error('Login First');
+            router.replace('/verify/login')
+        }
+    });
+
+    useEffect(() => {
+            const resultRef = ref(db, `/pdf/${id}`)
+            get(resultRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const prevData = snapshot.val();
+                    setGetData(prevData);
+                } else {
+                    toast.error('No data found')
+                }
+            });
+    }, [])
+
     const handleDelete = async () => {
         const storage = getStorage(app);
         const resultDbRef = ref(db, `/pdf/${id}`);
@@ -28,33 +47,10 @@ const editResult = ({ params }) => {
                 remove(resultDbRef)
                     .then(() => {
                         toast.success('Data deleted successfully!');
+                        router.replace('/Result');
                     })
             })
-        router.replace('/Result');
     }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const auth = getAuth(app);
-            onAuthStateChanged(auth, (user) => {
-                if (!user) {
-                    toast.error('Login First');
-                    router.replace('/verify/login')
-                }
-            });
-            const resultRef = ref(db, `/pdf/${id}`)
-            get(resultRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const prevData = snapshot.val();
-                    setGetData(prevData);
-                } else {
-                    toast.error('No data found')
-                }
-            })
-        }
-        return () => {fetchData();}
-    }, [])
-
 
     const handleSelectImage = () => {
         document.querySelector('input').click();
@@ -68,12 +64,8 @@ const editResult = ({ params }) => {
         }
         setSelectedFiles(filesData);
     }
-    const handleClear = () => {
+    const handleRemove = () => {
         setSelectedFiles('');
-    }
-    const handleRemove = (index) => {
-        const updatedFiles = selectedFiles.filter((_, i) => i !== index);
-        setSelectedFiles(updatedFiles);
     }
     const handleEditCancel = () => {
         router.replace('/Result')
@@ -144,6 +136,7 @@ const editResult = ({ params }) => {
                     <div>
                         <b> Add New</b>
                         <div id="file-dropper">
+                        <br></br>
                             <svg xmlns="http://www.w3.org/2000/svg" height="144px" width="144px" version="1.1" id="Layer_1" viewBox="0 0 303.188 303.188" >
                                 <g>
                                     <polygon fill='#E8E8E8' points="219.821,0 32.842,0 32.842,303.188 270.346,303.188 270.346,50.525  " />
@@ -191,7 +184,7 @@ const editResult = ({ params }) => {
                                                 </span>
                                                 <span className="todo-title"> {selectedFiles.name} </span>
                                             </div>
-                                            <div className="toggle-delete" onClick={() => handleRemove(index)}>
+                                            <div className="toggle-delete" onClick={() => handleRemove()}>
                                                 <button className="btnDelete" >
                                                     <svg viewBox="0 0 15 17.5" height="18" width="18" xmlns="http://www.w3.org/2000/svg" className="icon">
                                                         <path fill='#ffffff' transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
@@ -201,7 +194,7 @@ const editResult = ({ params }) => {
                                         </li>
                                     </ul>
                                     <div className="buttons top-20">
-                                        <a id="clear" className="button med negative" onClick={handleClear} >Clear</a>
+                                        <a id="clear" className="button med negative" onClick={handleEditCancel} >Cancel</a>
                                         <a id="export" className="button med positive" onClick={handleUpload} >
                                             <svg xmlns="http://www.w3.org/2000/svg" fill='#ffffff' height="18px" width="18px" version="1.1" id="Capa_1" viewBox="0 0 374.116 374.116" >
                                                 <g>
@@ -216,7 +209,6 @@ const editResult = ({ params }) => {
                         </div>
                     </div>
                 </div>
-                <button type="submit" style={{ bottom: 0 }} className="btn editBtn" onClick={handleEditCancel}> Cancel </button>
             </div>
         </div>
     )

@@ -23,14 +23,14 @@ const EditFaculty = ({ params }) => {
         image: null,
     });
 
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            toast.error('Login First')
+            router.replace('/verify/login')
+        }
+    });
     useEffect(() => {
-        const auth = getAuth(app);
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                toast.error('Login First')
-                router.replace('/verify/login')
-            }
-        });
         const container = document.querySelector(".circular-container");
         const facultyRef = ref(db, '/Faculty/' + `${category}/` + `${id}`)
         get(facultyRef).then((snapshot) => {

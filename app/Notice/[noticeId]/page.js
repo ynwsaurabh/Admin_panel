@@ -24,20 +24,18 @@ const page = ({ params }) => {
   const db = getDatabase(app);
   const router = useRouter();
 
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      toast.error('Login First')
+      router.replace('/verify/login')
+    }
+  });
+
   useEffect(() => {
-    const fetchData = async () =>{
-
-      const auth = getAuth(app);
-      onAuthStateChanged(auth, (user) => {
-        if (!user) {
-          toast.error('Login First')
-          router.replace('/verify/login')
-        }
-      });
-
     const container = document.querySelector(".notice-image-container");
     const noticeRef = ref(db, 'Notice/' + `${id}`)
-    await get(noticeRef).then((snapshot) => {
+    get(noticeRef).then((snapshot) => {
       const noticeData = snapshot.val();
       if (noticeData) {
         setFormData({
@@ -59,8 +57,6 @@ const page = ({ params }) => {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-    }
-    return () =>{fetchData();}
 
   }, [])
 
