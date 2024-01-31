@@ -25,11 +25,10 @@ const Result = () => {
       router.replace('/verify/login')
     }
   });
-  
+
   useEffect(() => {
-    const fetchData = async () => {
       const resultRef = ref(db, 'pdf/')
-      await get(resultRef).then((snapshot) => {
+      get(resultRef).then((snapshot) => {
         if (snapshot.exists()) {
 
           const result = Object.entries(snapshot.val()).map(([key, data]) => ({
@@ -40,9 +39,8 @@ const Result = () => {
         } else {
         }
       })
-    }
-    return () => { fetchData() }
-  }, [resultData])
+
+  }, [])
 
   const handleDelete = async (key, name) => {
     const storage = getStorage(app);
