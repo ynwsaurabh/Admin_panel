@@ -64,6 +64,9 @@ const editResult = ({ params }) => {
         }
         setSelectedFiles(filesData);
     }
+    const handleClear = () => {
+        setSelectedFiles('');
+    }
     const handleRemove = () => {
         setSelectedFiles('');
     }
@@ -194,7 +197,7 @@ const editResult = ({ params }) => {
                                         </li>
                                     </ul>
                                     <div className="buttons top-20">
-                                        <a id="clear" className="button med negative" onClick={handleEditCancel} >Cancel</a>
+                                        <a id="clear" className="button med negative" onClick={handleClear} >Clear</a>
                                         <a id="export" className="button med positive" onClick={handleUpload} >
                                             <svg xmlns="http://www.w3.org/2000/svg" fill='#ffffff' height="18px" width="18px" version="1.1" id="Capa_1" viewBox="0 0 374.116 374.116" >
                                                 <g>
@@ -209,6 +212,7 @@ const editResult = ({ params }) => {
                         </div>
                     </div>
                 </div>
+                <button type="submit" style={{ bottom: 0 }} className="btn editBtn" onClick={handleEditCancel}> Cancel </button>
             </div>
         </div>
     )

@@ -1,6 +1,5 @@
 .editResultWrapper {
     background-color: #ffffff38;
-    position: fixed;
     top: 50px;
     width: 100%;
     height: 100vh;
@@ -24,7 +23,7 @@
     background-color: white;
     width: 77%;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 60px;
     border-radius: 12px;
     padding: 30px;
     box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
