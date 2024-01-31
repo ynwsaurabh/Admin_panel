@@ -98,7 +98,7 @@ a {
   }
 }
 
-#playdate {
+#btnEdit {
   cursor: pointer;
   border: none;
   background-color: #f6f1e9;
@@ -115,7 +115,7 @@ a {
   float: right;
 }
 
-#playdate:hover {
+#btnEdit:hover {
   background-color: #ff8400;
   color: #f6f1e9;
   border: 2px solid #f6f1e9;

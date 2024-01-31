@@ -157,3 +157,12 @@
     width: fit-content;
   }
 }
+@media(max-width:400px) {
+  #profile-card-container {
+    width: fit-content;
+  }
+  .profile-card{
+    padding: 25px 13px 25px 10px;
+    max-width: 368px;
+  }
+}
